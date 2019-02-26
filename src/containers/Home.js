@@ -1,6 +1,11 @@
 import React, { Component } from "react"
 import FootBallCard from "../components/FootBallCard"
+import Banner from "../components/Banner"
+
+import { Grid, GridColumn } from "semantic-ui-react"
 let unirest = require('unirest')
+
+
 
 const config = require("../config")
 
@@ -54,11 +59,20 @@ class Home extends Component {
     render() {
 
         return ( 
-        <div>{
-            this.state.premierLeagueMatches &&
-            this.mapThroughMatches()
-        }
-        </div> );
+            <React.Fragment>
+                <Banner />
+                <Grid columns={1}>
+                    <Grid.Row>
+                        <GridColumn>
+                    {
+                this.state.premierLeagueMatches &&
+                this.mapThroughMatches()
+                }
+                        </GridColumn>
+                    </Grid.Row>
+                </Grid> 
+            </React.Fragment>
+            )
     }
 }
 
