@@ -1,8 +1,9 @@
 import React, { Component } from "react"
-import FootBallCard from "../components/FootBallCard"
 import Banner from "../components/Banner"
+import LeagueTable from "../components/PremierLeagueTable"
 
-import { Grid, GridColumn } from "semantic-ui-react"
+import { Grid } from "semantic-ui-react"
+
 let unirest = require('unirest')
 
 
@@ -25,35 +26,10 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        let data = []
-        unirest.get("https://api.football-data.org/v2/competitions/PL/matches?")
-            .header("X-Auth-Token", config.key)
-            .end((result) => {
-                data.push(result.body.matches)
-                console.log(data)
-                this.setState({ premierLeagueMatches: data})
-            })
-    }
 
-    
-
-    mapThroughMatches = () => {
-        const matches = this.state.premierLeagueMatches.map(match => match)
-        console.log("matches", matches)
-        return matches[0].map(match => 
-            <FootBallCard 
-            matchDay={match.season.currentMatchday}
-            matchDate={match.utcDate}
-            awayName={match.awayTeam.name}
-            homeName={match.homeTeam.name}
-            homeScore={match.score.fullTime.homeTeam}
-            awayScore={match.score.fullTime.awayTeam}
-            />
-        )
     }
 
 
-    
 
 
     render() {
@@ -61,16 +37,8 @@ class Home extends Component {
         return ( 
             <React.Fragment>
                 <Banner />
-                <Grid columns={1}>
-                    <Grid.Row>
-                        <GridColumn>
-                    {
-                this.state.premierLeagueMatches &&
-                this.mapThroughMatches()
-                }
-                        </GridColumn>
-                    </Grid.Row>
-                </Grid> 
+                <LeagueTable />
+
             </React.Fragment>
             )
     }
