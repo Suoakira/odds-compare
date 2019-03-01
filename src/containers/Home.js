@@ -1,6 +1,12 @@
 import React, { Component } from "react"
-import FootBallCard from "../components/FootBallCard"
+import Banner from "../components/Banner"
+import LeagueTable from "../components/PremierLeagueTable"
+
+import { Grid } from "semantic-ui-react"
+
 let unirest = require('unirest')
+
+
 
 const config = require("../config")
 
@@ -9,7 +15,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            premierLeagueMatches: undefined
+            premierLeagueWinners: undefined
         }
     }
 
@@ -21,44 +27,37 @@ class Home extends Component {
 
     componentDidMount() {
         let data = []
-        unirest.get("https://api.football-data.org/v2/competitions/PL/matches?")
+        unirest.get("https://api.football-data.org/v2/competitions/PL/")
             .header("X-Auth-Token", config.key)
             .end((result) => {
-                data.push(result.body.matches)
-                console.log(data)
-                this.setState({ premierLeagueMatches: data})
+                data.push(result.body)
+                //extract some more data here about previous winners see API documentations lots of info
+                this.setState({ premierLeagueWinners: data[0].seasons })
             })
     }
 
-    
+    mapThroughWinners = (array) => {
+        const premierLeagueWinners = array.filter(winner => winner.winner !== null)
+        console.log(premierLeagueWinners)
+        return premierLeagueWinners.map(winner => <LeagueTable winner={winner} />)
 
-    mapThroughMatches = () => {
-        const matches = this.state.premierLeagueMatches.map(match => match)
-        console.log("matches", matches)
-        return matches[0].map(match => 
-            <FootBallCard 
-            matchDay={match.season.currentMatchday}
-            matchDate={match.utcDate}
-            awayName={match.awayTeam.name}
-            homeName={match.homeTeam.name}
-            homeScore={match.score.fullTime.homeTeam}
-            awayScore={match.score.fullTime.awayTeam}
-            />
-        )
     }
 
 
-    
 
 
     render() {
 
         return ( 
-        <div>{
-            this.state.premierLeagueMatches &&
-            this.mapThroughMatches()
-        }
-        </div> );
+            <React.Fragment>
+                <Banner />
+                <h1>Premier League Winners</h1>
+                {
+                    this.state.premierLeagueWinners &&
+                    this.mapThroughWinners([...this.state.premierLeagueWinners])
+                    }
+            </React.Fragment>
+            )
     }
 }
 
