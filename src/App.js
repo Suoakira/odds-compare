@@ -4,6 +4,7 @@ import Banner from "./components/Banner"
 import config from "./config"
 
 import PremierLeagueWinners from "./containers/PremierLeagueWinners"
+import PremierLeagueTable from "./containers/PremierLeagueTable"
 
 let unirest = require('unirest')
 
@@ -24,16 +25,15 @@ class App extends Component {
 
   componentDidMount() {
     let data = []
+    // 
     unirest.get("https://api.football-data.org/v2/competitions/PL/")
       .header("X-Auth-Token", config.key)
       .end((result) => {
         data.push(result.body)
-        console.log(result.body)
         //extract some more data here about previous winners see API documentations lots of info
         this.setState({ premierLeagueWinners: data[0].seasons })
       })
   }
-
 
   render() {
     const { premierLeagueWinners } = this.state 
@@ -45,6 +45,10 @@ class App extends Component {
             exact path="/pl-winners" 
             render={props => <PremierLeagueWinners plWinners={premierLeagueWinners}/>}
             />
+          <Route
+            exact path="/pl-table"
+            render={props => <PremierLeagueTable />}
+          />
         </Switch>
       </div>
     );

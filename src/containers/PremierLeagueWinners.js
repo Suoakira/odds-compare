@@ -9,11 +9,8 @@ class PremierLeagueWinners extends Component {
         this.state = {  }
         }
 
-
-
     mapThroughWinners = (array) => {
         const premierLeagueWinners = array.filter(winner => winner.winner !== null)
-        console.log(premierLeagueWinners)
         return premierLeagueWinners.map((winner, key) => <LeagueTable key={key} winner={winner} />)
     }
 
