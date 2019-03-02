@@ -2,7 +2,7 @@ import React from 'react';
 import { Header, Image, Table } from 'semantic-ui-react'
 
 
-const LeagueTable = (props) => {
+const PremierLeagueWinner = (props) => {
     const { name, crestUrl} = props.winner.winner
     return ( 
         <Table basic='very'>
@@ -22,4 +22,4 @@ const LeagueTable = (props) => {
         </Table>);
 }
  
-export default LeagueTable;
+export default PremierLeagueWinner;
