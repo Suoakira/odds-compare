@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Input, Menu, Header } from 'semantic-ui-react'
 import { NavLink } from "react-router-dom"
+import plLogo from "../images/pl-league.png"
 
 export default class Banner extends Component {
     state = { activeItem: 'home' }
@@ -18,7 +19,7 @@ export default class Banner extends Component {
 
                 <NavLink to="/pl-table">
                     <Menu.Item
-                        name='League Standings'
+                        name='Standings'
                         active={activeItem === 'League Standings'}
                         onClick={this.handleItemClick}
                     />
@@ -26,15 +27,23 @@ export default class Banner extends Component {
 
                 <NavLink to="/pl-winners">
                     <Menu.Item
-                        name='League Winners'
+                        name='History'
                         active={activeItem === 'League Winners'}
+                        onClick={this.handleItemClick}
+                    />
+                </NavLink>
+
+                <NavLink to="/pl-matches">
+                    <Menu.Item
+                        name='Matches'
+                        active={activeItem === 'Matches'}
                         onClick={this.handleItemClick}
                     />
                 </NavLink>
 
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Header>Premier League Round Up</Header>
+                        <img className="pl-logo "src={plLogo} alt="premier league logo"/>
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>
