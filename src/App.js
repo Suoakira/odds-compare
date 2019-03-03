@@ -5,6 +5,7 @@ import config from "./config"
 
 import PremierLeagueWinners from "./containers/PremierLeagueWinners"
 import PremierLeagueTable from "./containers/PremierLeagueTable"
+import UpcomingMatches from "./containers/UpcomingMatchs"
 
 let unirest = require('unirest')
 
@@ -45,10 +46,14 @@ class App extends Component {
             exact path="/pl-winners" 
             render={props => <PremierLeagueWinners plWinners={premierLeagueWinners}/>}
             />
-          <Route
-            exact path="/pl-table"
-            render={props => <PremierLeagueTable />}
-          />
+            <Route
+              exact path="/pl-table"
+              render={props => <PremierLeagueTable />}
+            />
+            <Route
+              exact path="/pl-matches"
+              render={props => <UpcomingMatches />}
+            />
         </Switch>
       </div>
     );
